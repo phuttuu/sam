@@ -1,0 +1,29 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: vprofile
+  labels: 
+     app: vprofile
+ 
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: vprofile
+ 
+  template:
+    metadata:
+      labels:
+        app: vprofile
+    spec:
+      containers:
+      - name: vprofile
+        image: chocky/tomcat-webapp:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
